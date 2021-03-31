@@ -1,3 +1,6 @@
+from typing import Dict
+
+
 def is_number(string):
     try:
         if string.isnumeric():
@@ -100,19 +103,19 @@ def solve_equation(equation, deg):
         print(f"{equation.split()}")
 
 
-is_natural = False
+is_natural: bool = False
 
-argv1 = "5 + 4.8 * X^2 = -2 * X^2 + X"  # read from first argv
+argv1: str = "5 + 4.8 * X^2 = -2 * X^2 + X"  # read from first argv
 argv2 = "x"  # possible to enter other letter as x in 2nd argv
 
-equation_cleaned = "".join(argv1.split()).upper() \
+equation_cleaned: str = "".join(argv1.split()).upper() \
     .replace("+", " + ") \
     .replace("-", " - ") \
     .replace("*", " * ") \
     .replace("=", " = ")
 x = argv2.upper()
 
-determinants = {
+determinants: Dict[str, float] = {
     x + "^0": 0.0,
     x + "^1": 0.0,
     x + "^2": 0.0
