@@ -1,9 +1,8 @@
-class Utils:
-    def is_number(string):
-        try:
-            if string.isnumeric():
-                return True
-            float(string)
+def is_number(var):
+    try:
+        if var.isnumeric():
             return True
-        except ValueError:
-            return False
+        float(var)
+        return True
+    except ValueError:
+        return False

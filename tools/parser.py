@@ -1,4 +1,4 @@
-from .utils import Utils
+from .utils import is_number
 
 
 def insert_x0(equation, index, x):
@@ -20,7 +20,7 @@ def get_unsimplified_form(equation, x):
     print(equation)
 
     for i, var in enumerate(equation):
-        if Utils.is_number(var):
+        if is_number(var):
             if i == len(equation) - 1:
                 insert_x0(equation, len(equation), x)
             elif any(char in equation[i + 1] for char in ["+", "-", "="]):

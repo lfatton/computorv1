@@ -1,3 +1,4 @@
+import re
 from tools import parser, solver
 
 is_natural: bool = False
@@ -5,11 +6,7 @@ is_natural: bool = False
 argv1: str = "5 + 4.8 * X^2 = -2 * X^2 + X"  # read from first argv
 argv2 = "x"  # possible to enter other letter as x in 2nd argv
 
-equation_cleaned: str = "".join(argv1.split()).upper() \
-    .replace("+", " + ") \
-    .replace("-", " - ") \
-    .replace("*", " * ") \
-    .replace("=", " = ")
+equation_cleaned: str = re.sub(r"[+\-*/=]", lambda char: f" {char.group(0)} ", argv1.replace(" ", "").upper())
 x = argv2.upper()
 
 if equation_cleaned.find(x + "^0") == -1:
