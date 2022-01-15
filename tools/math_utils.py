@@ -23,8 +23,8 @@ def to_power(number, power):
 # using Babylonian method
 def square_root(number):
     if number < 0:
-        print(f"No real solutions for negative square root!")
-        return -1
+        print(f"Error: negative square root!")
+        exit(-1)
     if number == 0:
         return 0
     if number == 4:

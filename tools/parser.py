@@ -1,30 +1,16 @@
-from .utils import is_number
-
-
-def insert_x0(equation, index, x):
-    equation.insert(index, "*")
-    equation.insert(index + 1, x + "^0")
-
-    return equation
-
-
-def insert_times_one(equation, index):
-    equation.insert(index, "*")
-    equation.insert(index, "1")
-
-    return equation
+from .math_utils import is_number
+from .parser_utils import insert_x, insert_times_one
 
 
 def get_unsimplified_form(equation, x):
     equation = equation.split()
-    print(equation)
 
     for i, var in enumerate(equation):
         if is_number(var):
             if i == len(equation) - 1:
-                insert_x0(equation, len(equation), x)
+                insert_x(equation, len(equation), x, "^0")
             elif any(char in equation[i + 1] for char in ["+", "-", "="]):
-                insert_x0(equation, i + 1, x)
+                insert_x(equation, i + 1, x, "^0")
 
         if var == x:
             equation[i] = x + "^1"
