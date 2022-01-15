@@ -1,4 +1,6 @@
 from typing import Dict
+from .utils import to_power
+from .utils import square_root
 
 
 def get_coefficient(equation, i):
@@ -6,6 +8,26 @@ def get_coefficient(equation, i):
     if i > 2 and equation[i - 3] == "-":
         c *= -1
     return c
+
+
+def get_coefficients(equation, x):
+    coefficients: Dict[str, float] = {
+        x + "^0": 0.0,
+        x + "^1": 0.0,
+        x + "^2": 0.0
+    }
+    for i, var in enumerate(equation):
+        if any(unknown in var for unknown in [x + "^2", x + "^1", x + "^0", x]):
+            coefficient = get_coefficient(equation, i)
+            coefficients[var] += coefficient
+    print(f"Coefficients are: {coefficients}")
+    return coefficients
+
+
+def get_discriminant(a, b, c):
+    discriminant = to_power(b, 2) - 4 * a * c
+    print(f"Discriminant (b^2 - 4ac) is: {b}^2 - 4 * {a} * {c} = {discriminant}")
+    return discriminant
 
 
 def reduce_equation(equation, x):
@@ -43,15 +65,28 @@ def reduce_equation(equation, x):
 
 
 def solve_equation(equation, deg, x):
-    coefficients: Dict[str, float] = {
-        x + "^0": 0.0,
-        x + "^1": 0.0,
-        x + "^2": 0.0
-    }
     equation = equation.split()
     if deg == 2:
-        for i, var in enumerate(equation):
-            if any(unknown in var for unknown in [x + "^2", x + "^1", x + "^0", x]):
-                coeff = get_coefficient(equation, i)
-                coefficients[var] += coeff
-    print(f"Coefficients are: {coefficients}")
+        coefficients = get_coefficients(equation, x)
+        a = coefficients[x + "^2"]
+        b = coefficients[x + "^1"]
+        c = coefficients[x + "^0"]
+        discriminant = get_discriminant(a, b, c)
+
+        if discriminant < 0:
+            print(f"Since discriminant is negative, there is no real solution to the equation.")
+            return
+        elif discriminant == 0:
+            solution = -1 * b / (2 * a)
+            print(f"Since discriminant is 0, there is only one solution to the equation (-b / 2a): "
+                  f"-1 * {b} / (2 * {a}) =  {solution}")
+        elif discriminant > 0:
+            solution1 = (-1 * b + square_root(discriminant)) / (2 * a)
+            solution2 = (-1 * b - square_root(discriminant)) / (2 * a)
+            print(f"Since discriminant is positive, there are two real solutions to the equation"
+                  f"((-b ± √discriminant) / (2a)):\n"
+                  f"Solution 1: (-1 * {b} + √{discriminant}) / (2 * {a}) = {solution1}\n"
+                  f"Solution 2: (-1 * {b} - √{discriminant}) / (2 * {a}) = {solution2}")
+
+
+
