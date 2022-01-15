@@ -54,9 +54,23 @@ def reduce_equation(equation, x):
 
 def solve_equation(equation, deg, x):
     equation = equation.split()
+    coefficients = get_coefficients(equation, x)
+
+    if deg == 0:
+        print(f"\n{coefficients['c']} cannot be equal to 0.\n\n"
+              f"There is no solution.")
+        exit()
+
+    if deg == 1:
+        solution = -1 * coefficients['c'] / coefficients['b']
+        print(f"The equation is linear.\n\n"
+              f"The solution is:\n"
+              f"{x} = -1 * {coefficients['c']} / {coefficients['b']} = {solution}\n")
+        exit()
+
     if deg == 2:
-        coefficients = get_coefficients(equation, x)
-        print(f"Coefficients are: {coefficients}\n")
+        print(f"The equation is quadratic.\n"
+              f"Coefficients are: {coefficients}\n")
         discriminant = get_discriminant(coefficients['a'], coefficients['b'], coefficients['c'])
 
         if discriminant < 0:
@@ -75,6 +89,3 @@ def solve_equation(equation, deg, x):
                   f"{x}1 = (-1 * {coefficients['b']} + √{discriminant}) / (2 * {coefficients['a']}) = {x1}\n"
                   f"{x}2 = (-1 * {coefficients['b']} - √{discriminant}) / (2 * {coefficients['a']}) = {x2}\n")
             exit()
-
-
-
