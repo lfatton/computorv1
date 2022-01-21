@@ -36,8 +36,9 @@ def get_discriminant(a, b, c):
 
 
 def reduce_equation(equation, x):
-    equation_left = equation[0].split()
-    equation_right = equation[1].split()
+    equation_split_in_two = equation.split(" = ")
+    equation_left = equation_split_in_two[0].split()
+    equation_right = equation_split_in_two[1].split()
 
     left_coefficients = get_coefficients(equation_left, x)
     right_coefficients = get_coefficients(equation_right, x)

@@ -1,5 +1,16 @@
+import sys
+import re
 from .math_utils import is_number
-from .parser_utils import insert_x, insert_times_one
+from .parser_utils import print_usage, insert_x, insert_times_one, insert_decimal
+
+
+def check_arguments(equation, x):
+    regex_match = re.findall(r"[0-9" + x + "]", equation)
+
+    if not regex_match:
+        print(f"Missing variable or constants.\n")
+        print_usage()
+    return
 
 
 def get_unsimplified_form(equation, x):
@@ -14,6 +25,9 @@ def get_unsimplified_form(equation, x):
 
         if var == x:
             equation[i] = x + "^1"
+
+        if var == "/":
+            equation = insert_decimal(equation, i)
 
         if any(unknown in var for unknown in [x + "^2", x + "^1", x + "^0", x]):
             if i == 0:
