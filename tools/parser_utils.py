@@ -69,8 +69,22 @@ def rewrite_reduced_equation(coefficients, x):
     c = c + " * " + x + "^0 "
     if coefficients['c'] == 0:
         c = ""
-
     reduced_equation = a + b + c + "= 0"
+
+    if len(coefficients) > 3:
+        d = ""
+        for i, var in enumerate(coefficients):
+            if any(unknown in var for unknown in [x]):
+                coefficient = coefficients[var]
+                if coefficient < 0:
+                    d += " - " + str(-1 * coefficient)
+                elif coefficient >= 0 and d != "":
+                    d += " + " + str(coefficient)
+                else:
+                    d += str(coefficient)
+                d += " * " + str(var) + " "
+        reduced_equation = d + reduced_equation
+
     if reduced_equation == "= 0":
         reduced_equation = "0 = 0"
         print(f"Reduced form: 0 = 0\n\n"

@@ -40,7 +40,7 @@ def get_unsimplified_form(equation, x):
         if var == "/":
             equation = insert_decimal(equation, i)
 
-        if any(unknown in var for unknown in [x + "^2", x + "^1", x + "^0", x]):
+        if any(unknown in var for unknown in [x]):
             if i == 0:
                 insert_times_one(equation, 0)
             elif equation[i - 1] != "*":

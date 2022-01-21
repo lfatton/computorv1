@@ -37,5 +37,5 @@ print(f"Reduced form: {equation}\n\n"
 if degree < 3:
     solver.solve_equation(equation, degree, x)
 else:
-    print(f"The polynomial degree is strictly greater than 2, the equation cannot be solved.")
+    print(f"The polynomial degree is strictly greater than 2, the equation cannot be solved by this program.")
     exit()

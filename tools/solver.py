@@ -12,15 +12,18 @@ def get_coefficient(equation, i):
 
 def get_coefficients(equation, x):
     coefficients: Dict[str, float] = {
-        x + "^0": 0.0,
+        x + "^2": 0.0,
         x + "^1": 0.0,
-        x + "^2": 0.0
+        x + "^0": 0.0
     }
 
     for i, var in enumerate(equation):
-        if any(unknown in var for unknown in [x + "^2", x + "^1", x + "^0"]):
+        if any(unknown in var for unknown in [x]):
             coefficient = get_coefficient(equation, i)
-            coefficients[var] += coefficient
+            try:
+                coefficients[var] += coefficient
+            except KeyError:
+                coefficients[var] = coefficient
     coefficients['a'] = coefficients.pop(x + "^2")
     coefficients['b'] = coefficients.pop(x + "^1")
     coefficients['c'] = coefficients.pop(x + "^0")
@@ -44,9 +47,11 @@ def reduce_equation(equation, x):
     right_coefficients = get_coefficients(equation_right, x)
     coefficients = left_coefficients
 
-    coefficients['a'] = left_coefficients['a'] - right_coefficients['a']
-    coefficients['b'] = left_coefficients['b'] - right_coefficients['b']
-    coefficients['c'] = left_coefficients['c'] - right_coefficients['c']
+    for i, var in enumerate(right_coefficients):
+        try:
+            coefficients[var] = left_coefficients[var] - right_coefficients[var]
+        except KeyError:
+            coefficients[var] = right_coefficients[var]
 
     reduced_equation = rewrite_reduced_equation(coefficients, x)
 
