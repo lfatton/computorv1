@@ -4,8 +4,13 @@ from tools import parser, solver
 
 is_natural: bool = False
 
+if len(sys.argv) > 3:
+    parser.print_usage()
 if len(sys.argv) > 2:
-    x = sys.argv[2].upper()
+    if len(sys.argv[2]) == 1 and re.match("[A-Za-z]", sys.argv[2]):
+        x = sys.argv[2].upper()
+    else:
+        parser.print_usage()
 else:
     x = "X"
 if len(sys.argv) > 1:
