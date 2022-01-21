@@ -1,6 +1,7 @@
 def print_usage():
     print(f"Usage is: "
           f"python main.py equation(string) variable(optional, string)\n\n"
+          f"Only natural numbers (including 0) exponents supported.\n\n"
           f"Example: "
           f'python main.py "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0" "X"')
     exit()
@@ -37,37 +38,37 @@ def insert_decimal(equation, index):
     return equation
 
 
-def rewrite_reduced_equation(coefficients, x):
+def rewrite_reduced_equation(coefficients, x, with_null_coefficients):
     a = ""
     b = ""
     c = ""
 
     if coefficients['a'] < 0:
         a = "- " + str(-1 * coefficients['a'])
-    elif coefficients['a'] > 0:
+    elif coefficients['a'] >= 0:
         a = str(coefficients['a'])
     a = a + " * " + x + "^2 "
-    if coefficients['a'] == 0:
+    if coefficients['a'] == 0 and not with_null_coefficients:
         a = ""
 
     if coefficients['b'] < 0:
         b = "- " + str(-1 * coefficients['b'])
-    elif coefficients['b'] > 0 and a != "":
+    elif coefficients['b'] >= 0 and a != "":
         b = "+ " + str(coefficients['b'])
-    elif coefficients['b'] > 0 and a == "":
+    elif coefficients['b'] >= 0 and a == "":
         b = str(coefficients['b'])
     b = b + " * " + x + "^1 "
-    if coefficients['b'] == 0:
+    if coefficients['b'] == 0 and not with_null_coefficients:
         b = ""
 
     if coefficients['c'] < 0:
         c = "- " + str(-1 * coefficients['c'])
-    elif coefficients['c'] > 0 and (a != "" or b != ""):
+    elif coefficients['c'] >= 0 and (a != "" or b != ""):
         c = "+ " + str(coefficients['c'])
-    elif coefficients['c'] > 0 and (a == "" and b == ""):
+    elif coefficients['c'] >= 0 and (a == "" and b == ""):
         c = str(coefficients['c'])
     c = c + " * " + x + "^0 "
-    if coefficients['c'] == 0:
+    if coefficients['c'] == 0 and not with_null_coefficients:
         c = ""
     reduced_equation = a + b + c + "= 0"
 
@@ -87,9 +88,8 @@ def rewrite_reduced_equation(coefficients, x):
 
     if reduced_equation == "= 0":
         reduced_equation = "0 = 0"
-        print(f"Reduced form: 0 = 0\n\n"
-              f"Polynomial degree: 0\n\n"
-              f"All reals are solution.")
+        print(f"Polynomial degree: 0\n\n"
+              f"Since the equation can be written as 0 = 0, all real numbers are solution.")
         exit()
 
     return reduced_equation

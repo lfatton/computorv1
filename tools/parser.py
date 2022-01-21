@@ -17,10 +17,13 @@ def check_arguments(equation, x):
         print_usage()
 
     equation = equation.split()
+
     for i, var in enumerate(equation):
-        if var == x + "^":
-            print(f"Missing exponent.\n")
-            print_usage()
+        if any(unknown in var for unknown in [x]):
+            if var == x + "^":
+                print_usage()
+            if var.find(".") != -1:
+                print_usage()
     return
 
 

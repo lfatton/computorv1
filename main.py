@@ -28,11 +28,10 @@ if is_natural:
     equation = parser.get_unsimplified_form(equation, x)
     print(f"Equation in non natural form: {equation}\n")
 
-equation = solver.reduce_equation(equation, x)
 
+equation = solver.reduce_equation(equation, x)
 degree = parser.get_polynomial_degree(equation)
-print(f"Reduced form: {equation}\n\n"
-      f"Polynomial degree: {degree}")
+print(f"Polynomial degree: {degree}")
 
 if degree < 3:
     solver.solve_equation(equation, degree, x)

@@ -53,7 +53,19 @@ def reduce_equation(equation, x):
         except KeyError:
             coefficients[var] = right_coefficients[var]
 
-    reduced_equation = rewrite_reduced_equation(coefficients, x)
+    with_zero_coefficients = False
+    for i, var in enumerate(coefficients):
+        if coefficients[var] == 0.0:
+            with_zero_coefficients = True
+
+    if with_zero_coefficients:
+        reduced_equation = rewrite_reduced_equation(coefficients, x, True)
+        print(f"Reduced form: {reduced_equation}\n")
+        reduced_equation = rewrite_reduced_equation(coefficients, x, False)
+        print(f"Reduced form without zero coefficients: {reduced_equation}\n")
+    else:
+        reduced_equation = rewrite_reduced_equation(coefficients, x, False)
+        print(f"Reduced form: {reduced_equation}\n")
 
     return reduced_equation
 
@@ -90,7 +102,7 @@ def solve_equation(equation, deg, x):
         elif discriminant > 0:
             x1 = (-1 * coefficients['b'] + square_root(discriminant)) / (2 * coefficients['a'])
             x2 = (-1 * coefficients['b'] - square_root(discriminant)) / (2 * coefficients['a'])
-            print(f"Since the discriminant is positive, there are two real solutions to the equation "
+            print(f"Since the discriminant is strictly positive, there are two real solutions to the equation "
                   f"[(-b ± √Δ) / (2a)]:\n"
                   f"{x}1 = (-1 * {coefficients['b']} + √{discriminant}) / (2 * {coefficients['a']}) = {x1}\n"
                   f"{x}2 = (-1 * {coefficients['b']} - √{discriminant}) / (2 * {coefficients['a']}) = {x2}\n")
