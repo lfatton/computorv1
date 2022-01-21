@@ -33,7 +33,6 @@ def insert_decimal(equation, index):
         del equation[index - 1]
     except ValueError or IndexError:
         print_usage()
-    print(equation)
 
     return equation
 

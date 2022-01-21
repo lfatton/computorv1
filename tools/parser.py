@@ -10,6 +10,17 @@ def check_arguments(equation, x):
     if not regex_match:
         print(f"Missing variable or constants.\n")
         print_usage()
+
+    regex_match = re.findall(r"(?!" + x + ")[A-Z]", equation)
+    if regex_match:
+        print(f"Too many variables or wrong variable.\n")
+        print_usage()
+
+    equation = equation.split()
+    for i, var in enumerate(equation):
+        if var == x + "^":
+            print(f"Missing exponent.\n")
+            print_usage()
     return
 
 
