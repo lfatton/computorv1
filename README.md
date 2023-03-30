@@ -1,6 +1,6 @@
 # computorv1
 ```
-Small 42 school project that solves 2nd degree equation
+Small 42 school project that solves 2nd and 1st degree equations.
 ```
 ### Usage
 ```
